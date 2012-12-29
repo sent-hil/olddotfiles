@@ -1,5 +1,5 @@
+78.1024967591	/Users/senthil/.dotify
 73.4846922836	/Users/senthil/play/dotfiles/dotfiles
-70.0	/Users/senthil/.dotify
 68.5565460041	/private/tmp/git-extras
 65.574385243	/Users/senthil/play
 59.9999999999	/Users/senthil/play/saran
