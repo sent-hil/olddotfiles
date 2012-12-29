@@ -1,0 +1,22 @@
+73.4846922836	/Users/senthil/play/dotfiles/dotfiles
+70.0	/Users/senthil/.dotify
+68.5565460041	/private/tmp/git-extras
+65.574385243	/Users/senthil/play
+59.9999999999	/Users/senthil/play/saran
+50.9901951358	/private/tmp/test
+47.9583152331	/Users/senthil/play/wrappable
+43.5889894353	/Users/senthil/play/dotfiles/dotfiles/.vim
+42.4264068711	/Volumes/NO NAME/dotfiles/dotfiles
+34.6410161513	/private/tmp
+29.9999999999	/Volumes/NO NAME/dotfiles
+28.2842712474	/Users/senthil/play/dotfiles
+26.4575131106	/Users/senthil/play/dotfiles/dotfiles/.vim/bundle
+26.4575131106	/Users/senthil/play/dotfiles/dotfiles/.vim/bundle/snipmate
+22.360679775	/Users/senthil/Documents
+20.0	/Users/senthil/.dotify/.local/share
+20.0	/Users/senthil/dev
+20.0	/Users/senthil/.vim/bundle/vundle
+17.3205080757	/Users/senthil/.dotify/.local
+14.1421356237	/Users/senthil/.vim/bundle
+14.1421356237	/Users/senthil/.dotify/.local/share/autojump
+10.0	/Users

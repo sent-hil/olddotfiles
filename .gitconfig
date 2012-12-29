@@ -1,0 +1,25 @@
+[user]
+	name = sent-hil
+	email = me@sent-hil.com
+[diff]
+[color]
+  ui = auto
+[format]
+  pretty=format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
+[alias]
+  a  = add .
+  b  = branch
+  c  = commit -m
+  d  = diff --cached
+  i  = init
+  l  = log --stat --color
+  r  = reset
+  s  = status
+  cm = commit --amend
+  ch = checkout
+  dh = diff HEAD
+  fa = fetch --all
+[merge]
+  tool = vimdiff
+[github]
+	user = sent-hil

@@ -1,0 +1,11 @@
+alias ls='ls -Ga'
+alias c='clear'
+alias e='exit'
+alias reload='source ~/.zshrc'
+alias tree='tree -C'
+
+# mkdir, cd into it
+function mkcd {
+  mkdir $1
+  cd $1
+}
