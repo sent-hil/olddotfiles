@@ -224,6 +224,7 @@ Bundle 'vroom'
 Bundle 'jeetsukumaran/vim-buffergator'
 Bundle 'matchit.zip'
 Bundle 'ruby-matchit'
+Bundle 'endwise.vim'
 
 " Utility
 Bundle 'repeat.vim'
