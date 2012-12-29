@@ -23,5 +23,5 @@
   tool = vimdiff
 [github]
 	user = sent-hil
-[core]
-	pager = cat
+[push]
+	default = matching
