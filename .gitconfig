@@ -25,3 +25,6 @@
 	user = sent-hil
 [push]
 	default = matching
+[core]
+	editor = /usr/bin/vim
+	pager = less -FRSX
