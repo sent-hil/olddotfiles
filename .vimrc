@@ -83,9 +83,6 @@ autocmd! BufRead,BufNewFile *.sass setfiletype sass
 " Map ,e to open files in the same directory as the current file
 map <leader>e :e <C-R>=expand("%:h")<cr>/
 
-" open root dir in command line
-map <leader>r :e <C-R>=expand("~")<cr>/
-
 autocmd BufRead,BufNewFile *.feature set sw=4 sts=4 et
 
 set numberwidth=5
@@ -108,20 +105,10 @@ command! Qall :qall
 :map <C-l> <C-w>l
 :map <C-h> <C-w>h
 :map <C-o> <C-w>o
-
-" Press ^F from insert mode to insert the current file name
-imap <C-F> <C-R>=expand("%")<CR>
+:map qq <C-w>q
 
 " No Help, please
 nmap <F1> <Esc>
-
-" Inserts the path of the currently edited file into a command
-" Command mode: Ctrl+P
-cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-
-" Duplicate a selection
-" Visual mode: P
-vmap xP y'>p
 
 " Opens an edit command with the path of the currently edited file filled in
 " Normal mode: <Leader>e
@@ -132,17 +119,6 @@ nnoremap <Right> :echoe "Use l"<CR>
 nnoremap <Up> :echoe "Use k"<CR>
 nnoremap <Down> :echoe "Use j"<CR>
 
-function! OpenChangedFiles()
-  only " Close all windows, unless they're modified
-  let status = system('git status -s | grep "^ \?\(M\|A\)" | cut -d " " -f 3')
-  let filenames = split(status, "\n")
-  exec "edit " . filenames[0]
-  for filename in filenames[1:]
-    exec "sp " . filename
-  endfor
-endfunction
-command! OpenChangedFiles :call OpenChangedFiles()
-
 if &diff
   nmap <c-h> :diffget 1<cr>
   nmap <c-l> :diffget 3<cr>
@@ -151,7 +127,7 @@ if &diff
   set nonumber
 endif
 
-set winheight=7
+set winheight=10
 set winminheight=7
 set winheight=999
 
@@ -169,7 +145,6 @@ map <leader>d :set relative! relative?<CR>
 " opens cmd to enter terminal commands
 map <leader>z :!<space>
 
-nnoremap <leader>e :CommandT<CR>
 set wildignore+=vendor/**
 set wildignore+=coverage/assets/**
 
@@ -221,18 +196,41 @@ Bundle 'gmarik/vundle'
 Bundle 'rails.vim'
 Bundle 'ruby.vim'
 Bundle 'vroom'
-Bundle 'jeetsukumaran/vim-buffergator'
-Bundle 'matchit.zip'
 Bundle 'ruby-matchit'
 Bundle 'endwise.vim'
+Bundle 'textobj-user'
+Bundle 'textobj-rubyblock'
 
 " Utility
 Bundle 'repeat.vim'
 Bundle 'surround.vim'
-Bundle 'ctrlp.vim'
 Bundle 'The-NERD-Commenter'
 Bundle 'Syntastic'
 Bundle 'fugitive.vim'
 Bundle 'Lokaltog/vim-powerline'
+Bundle 'jeetsukumaran/vim-buffergator'
+Bundle 'matchit.zip'
+Bundle 'AutoClose'
+Bundle 'mileszs/ack.vim'
 
 call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
+
+" ,a to Ack (search in files)
+nnoremap <leader>a :Ack 
+
+nmap <Leader>90 <Plug>ToggleAutoCloseMappings
+
+" Emacs-like beginning and end of line.
+imap <c-e> <c-o>$
+imap <c-a> <c-o>^
+
+command -nargs=0 -bar Update if &modified
+                           \|    if empty(bufname('%'))
+                           \|        browse confirm write
+                           \|    else
+                           \|        confirm write
+                           \|    endif
+                           \|endif
+nnoremap <silent> <C-S> :<C-u>Update<CR>
+inoremap <C-S> <Esc>:Update<CR>
+vnoremap <C-S> <Esc>:update<CR>

@@ -52,3 +52,10 @@ source ~/.bash_alias
 
 eval "$(rbfu --init --auto)"
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+function bone {
+  bones create -s hero $1
+}
+
+alias vim="stty stop '' -ixoff ; vim"
+ttyctl -f
