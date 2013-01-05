@@ -212,6 +212,8 @@ Bundle 'jeetsukumaran/vim-buffergator'
 Bundle 'matchit.zip'
 Bundle 'AutoClose'
 Bundle 'mileszs/ack.vim'
+Bundle 'Tagbar'
+Bundle 'ctrlp.vim'
 
 call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
 
