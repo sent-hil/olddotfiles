@@ -236,3 +236,5 @@ command -nargs=0 -bar Update if &modified
 nnoremap <silent> <C-S> :<C-u>Update<CR>
 inoremap <C-S> <Esc>:Update<CR>
 vnoremap <C-S> <Esc>:update<CR>
+
+set numberwidth=2
