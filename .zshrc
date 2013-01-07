@@ -59,3 +59,5 @@ function bone {
 
 alias vim="stty stop '' -ixoff ; vim"
 ttyctl -f
+
+export EDITOR=vim
