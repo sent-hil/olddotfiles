@@ -238,3 +238,5 @@ inoremap <C-S> <Esc>:Update<CR>
 vnoremap <C-S> <Esc>:update<CR>
 
 set numberwidth=2
+
+set textwidth=61
