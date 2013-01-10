@@ -53,6 +53,7 @@ source ~/.bash_alias
 eval "$(rbfu --init --auto)"
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
+# Alias for creating Ruby libraries
 function bone {
   bones create -s hero $1
 }
@@ -60,4 +61,8 @@ function bone {
 alias vim="stty stop '' -ixoff ; vim"
 ttyctl -f
 
+# Set default edtior, mainly for pry
 export EDITOR=vim
+
+# Turn off damn auto correct
+unsetopt correct_all
