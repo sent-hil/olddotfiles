@@ -193,7 +193,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Programming
-Bundle 'rails.vim'
+Bundle 'tpope/vim-rails'
 Bundle 'ruby.vim'
 Bundle 'vroom'
 Bundle 'ruby-matchit'
