@@ -76,8 +76,7 @@ augroup myfiletypes
   autocmd FileType python set sw=4 sts=4 et
 augroup END
 
-autocmd BufRead,BufNewFile *.html source ~/.vim/bundle/misc/indent/html_grb.vim
-autocmd FileType htmldjango source ~/.vim/bundle/misc/indent/html_grb.vim
+autocmd BufRead,BufNewFile *.html source ~/.vim/indent/html_grb.vim
 autocmd! BufRead,BufNewFile *.sass setfiletype sass
 
 " Map ,e to open files in the same directory as the current file
@@ -210,7 +209,6 @@ Bundle 'fugitive.vim'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'jeetsukumaran/vim-buffergator'
 Bundle 'matchit.zip'
-Bundle 'AutoClose'
 Bundle 'mileszs/ack.vim'
 Bundle 'Tagbar'
 Bundle 'ctrlp.vim'
@@ -240,5 +238,7 @@ vnoremap <C-S> <Esc>:update<CR>
 set numberwidth=2
 
 set textwidth=61
+set wrap
+set linebreak
 
 set complete-=i
