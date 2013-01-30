@@ -49,6 +49,7 @@ compinit
 [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
 
 source ~/.bash_alias
+source ~/.passwords
 
 eval "$(rbfu --init --auto)"
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
