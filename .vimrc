@@ -78,6 +78,7 @@ augroup END
 
 autocmd BufRead,BufNewFile *.html source ~/.vim/indent/html_grb.vim
 autocmd! BufRead,BufNewFile *.sass setfiletype sass
+au BufRead,BufNewFile *.go set filetype=go
 
 " Map ,e to open files in the same directory as the current file
 map <leader>e :e <C-R>=expand("%:h")<cr>/
@@ -137,6 +138,8 @@ autocmd BufRead *_spec.rb syn keyword rubyRspec context it specify it_should_beh
 
 " ? and ! are considered part of method
 autocmd BufRead,BufNewFile *.rb set iskeyword+=?,!
+
+au BufRead,BufNewFile *.go set filetype=go
 
 " toggle setting dir to current file
 map <leader>d :set relative! relative?<CR>
@@ -199,6 +202,9 @@ Bundle 'ruby-matchit'
 Bundle 'endwise.vim'
 Bundle 'textobj-user'
 Bundle 'textobj-rubyblock'
+Bundle 'go.vim'
+Bundle 'git://github.com/jnwhiteh/vim-golang.git'
+Bundle 'nsf/gocode', {'rtp': 'vim/'}
 
 " Utility
 Bundle 'repeat.vim'
@@ -242,3 +248,5 @@ set wrap
 set linebreak
 
 set complete-=i
+
+set rtp+=$GOROOT/misc/vim
