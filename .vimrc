@@ -139,8 +139,6 @@ autocmd BufRead *_spec.rb syn keyword rubyRspec context it specify it_should_beh
 " ? and ! are considered part of method
 autocmd BufRead,BufNewFile *.rb set iskeyword+=?,!
 
-au BufRead,BufNewFile *.go set filetype=go
-
 " toggle setting dir to current file
 map <leader>d :set relative! relative?<CR>
 
@@ -204,7 +202,9 @@ Bundle 'textobj-user'
 Bundle 'textobj-rubyblock'
 Bundle 'go.vim'
 Bundle 'git://github.com/jnwhiteh/vim-golang.git'
-Bundle 'nsf/gocode', {'rtp': 'vim/'}
+Bundle 'undx/vim-gocode'
+Bundle 'rubycomplete.vim'
+Bundle 'danchoi/ri.vim'
 
 " Utility
 Bundle 'repeat.vim'
@@ -218,6 +218,7 @@ Bundle 'matchit.zip'
 Bundle 'mileszs/ack.vim'
 Bundle 'Tagbar'
 Bundle 'ctrlp.vim'
+Bundle 'SuperTab'
 
 call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
 
@@ -250,3 +251,43 @@ set linebreak
 set complete-=i
 
 set rtp+=$GOROOT/misc/vim
+
+"imap <C-p> <C-x><C-o>
+"imap <C-@> <C-p>
+
+let g:stop_autocomplete=0
+
+if has("autocmd")
+    autocmd FileType ruby set omnifunc=rubycomplete#Complete
+    autocmd FileType ruby let g:rubycomplete_buffer_loading=1
+    autocmd FileType ruby let g:rubycomplete_classes_in_global=1
+endif
+
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+map tt :TagbarToggle<CR>
