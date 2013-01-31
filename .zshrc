@@ -68,4 +68,4 @@ export EDITOR=vim
 # Turn off damn auto correct
 unsetopt correct_all
 
-export GOPATH=$HOME/gocode
+export GOPATH=$HOME/play/gocode
