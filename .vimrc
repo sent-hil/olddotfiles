@@ -79,6 +79,7 @@ augroup END
 autocmd BufRead,BufNewFile *.html source ~/.vim/indent/html_grb.vim
 autocmd! BufRead,BufNewFile *.sass setfiletype sass
 au BufRead,BufNewFile *.go set filetype=go
+autocmd BufWritePre *.go Fmt
 
 " Map ,e to open files in the same directory as the current file
 map <leader>e :e <C-R>=expand("%:h")<cr>/
@@ -105,6 +106,8 @@ command! Qall :qall
 :map <C-l> <C-w>l
 :map <C-h> <C-w>h
 :map <C-o> <C-w>o
+
+" close file
 :map qq <C-w>q
 
 " No Help, please
@@ -192,23 +195,22 @@ call vundle#rc()
 " required!
 Bundle 'gmarik/vundle'
 
-" Programming
+" Ruby/Rails
 Bundle 'tpope/vim-rails'
-Bundle 'ruby.vim'
+Bundle 'vim-ruby/vim-ruby'
 Bundle 'vroom'
 Bundle 'ruby-matchit'
-Bundle 'endwise.vim'
-Bundle 'textobj-user'
 Bundle 'textobj-rubyblock'
-Bundle 'go.vim'
-Bundle 'git://github.com/jnwhiteh/vim-golang.git'
-Bundle 'undx/vim-gocode'
 Bundle 'rubycomplete.vim'
 Bundle 'danchoi/ri.vim'
 
-" Utility
-Bundle 'repeat.vim'
-Bundle 'surround.vim'
+" Go
+Bundle 'jnwhiteh/vim-golang'
+Bundle 'nsf/gocode', {'rtp': 'vim/'}
+
+" Utilities
+Bundle 'endwise.vim'
+Bundle 'textobj-user'
 Bundle 'The-NERD-Commenter'
 Bundle 'Syntastic'
 Bundle 'fugitive.vim'
@@ -218,7 +220,14 @@ Bundle 'matchit.zip'
 Bundle 'mileszs/ack.vim'
 Bundle 'Tagbar'
 Bundle 'ctrlp.vim'
-Bundle 'SuperTab'
+Bundle 'Supertab'
+Bundle 'delimitMate.vim'
+
+" snippets
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "honza/snipmate-snippets"
+Bundle "garbas/vim-snipmate"
 
 call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
 
@@ -231,6 +240,7 @@ nmap <Leader>90 <Plug>ToggleAutoCloseMappings
 imap <c-e> <c-o>$
 imap <c-a> <c-o>^
 
+" Cntrl + s saves file
 command -nargs=0 -bar Update if &modified
                            \|    if empty(bufname('%'))
                            \|        browse confirm write
@@ -290,6 +300,43 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
+
+" open buffer with list of ctags for file
 map tt :TagbarToggle<CR>
 
 autocmd FileType go map ,, :w \|! clear && go run %<cr>
+
+" Opens prompt to search ri docs
+nnoremap  ,s :call ri#OpenSearchPrompt(0)<cr> " horizontal split
+" Look up keyword under cursor in ri
+nnoremap  ,kk :call ri#LookupNameUnderCursor()<cr> " keyword lookup
+
+function! Smart_TabComplete()
+  let line = getline('.')                         " current line
+
+  let substr = strpart(line, -1, col('.')+1)      " from the start of the current
+                                                  " line to one character right
+                                                  " of the cursor
+  let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
+  if (strlen(substr)==0)                          " nothing to match on empty string
+    return "\<tab>"
+  endif
+  let has_period = match(substr, '\.') != -1      " position of period, if any
+  let has_slash = match(substr, '\/') != -1       " position of slash, if any
+  if (!has_period && !has_slash)
+    return "\<C-X>\<C-P>"                         " existing text matching
+  elseif ( has_slash )
+    return "\<C-X>\<C-F>"                         " file matching
+  else
+    return "\<C-X>\<C-O>"                         " plugin matching
+  endif
+endfunction
+inoremap <tab> <c-r>=Smart_TabComplete()<CR>
+
+" single tab activates snipmate
+
+" double oo activates omni completion
+imap oo <c-x><c-o>
+
+" double ll completes local variables
+imap ll <c-p>
