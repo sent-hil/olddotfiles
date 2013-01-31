@@ -291,3 +291,5 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 map tt :TagbarToggle<CR>
+
+autocmd FileType go map ,, :w \|! clear && go run %<cr>
