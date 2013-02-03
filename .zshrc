@@ -69,3 +69,5 @@ export EDITOR=vim
 unsetopt correct_all
 
 export GOPATH=$HOME/play/gocode
+
+source ~/.go_completions
