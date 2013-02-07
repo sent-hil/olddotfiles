@@ -189,8 +189,8 @@ Bundle 'matchit.zip'
 Bundle 'mileszs/ack.vim'
 Bundle 'Tagbar'
 Bundle 'ctrlp.vim'
-Bundle 'Supertab'
 Bundle 'delimitMate.vim'
+Bundle 'vim-coffee-script'
 
 " snippets
 Bundle "MarcWeber/vim-addon-mw-utils"
@@ -308,5 +308,14 @@ autocmd FileType go map ,, :w \|! clear && go run %<CR>
 autocmd FileType go map <leader>d :Godoc<CR>
 
 " OTHERS
-autocmd BufRead,BufNewFile *.html source ~/.vim/indent/html_grb.vim
+" autocmd BufRead,BufNewFile *.html source ~/.vim/indent/html_grb.vim
 autocmd! BufRead,BufNewFile *.sass setfiletype sass
+
+filetype indent on
+
+" Javascript
+autocmd FileType javascript map ,, :w \|! clear && node %<CR>
+
+" Coffeescript
+au BufRead,BufNewFile *.coffee set filetype=coffee
+autocmd FileType coffee map ,, :w \|! clear && coffee -c %<CR>
