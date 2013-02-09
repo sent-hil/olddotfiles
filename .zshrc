@@ -5,7 +5,7 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="agnoster"
+ZSH_THEME="blinks"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -72,3 +72,7 @@ export GOPATH=$HOME/play/gocode:/$HOME/others/koding/go
 
 source ~/.go_completions
 ulimit -n 1024
+
+[ "$TERM" = "xterm" ] && TERM="xterm-256color"
+
+export D8_PATH=/Users/senthil/others/js/node/deps/v8
