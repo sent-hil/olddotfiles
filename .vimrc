@@ -318,4 +318,4 @@ autocmd FileType javascript map ,, :w \|! clear && node %<CR>
 
 " Coffeescript
 au BufRead,BufNewFile *.coffee set filetype=coffee
-autocmd FileType coffee map ,, :w \|! clear && coffee -c %<CR>
+autocmd FileType coffee map ,, :w \|! clear && node %<CR>
