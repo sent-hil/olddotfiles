@@ -34,11 +34,11 @@ set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 
 if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
+ "set nobackup		" do not keep a backup file, use versions instead
 else
-  set backup		" keep a backup file
+ "set backup		" keep a backup file
 endif
- set ruler		" show the cursor position all the time
+"set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 
 set expandtab
@@ -61,8 +61,14 @@ set winheight=10
 set winminheight=7
 set winheight=999
 
-set wildignore+=vendor/**
-set wildignore+=coverage/assets/**
+" general ruby ignores
+set wildignore+=*/vendor/*
+set wildignore+=*/coverage/assets/*
+
+" Koding ignores
+set wildignore+=*/node_modules/*
+set wildignore+=*/_archive/*
+set wildignore+=*/vagrant/*
 
 set numberwidth=5
 
@@ -78,7 +84,7 @@ set shell=/bin/sh
 
 set numberwidth=2
 
-set textwidth=61
+"set textwidth=61
 set wrap
 set linebreak
 
@@ -161,47 +167,49 @@ let g:Powerline_symbols = 'fancy'
 set rtp+=$GOROOT/misc/vim
 call vundle#rc()
 
-" let Vundle manage Vundle
+"let Vundle manage Vundle
 Bundle 'gmarik/vundle'
 
-" Ruby/Rails
+"Ruby/Rails
 Bundle 'tpope/vim-rails'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'vroom'
-Bundle 'ruby-matchit'
-Bundle 'textobj-rubyblock'
-Bundle 'rubycomplete.vim'
+
 Bundle 'danchoi/ri.vim'
+Bundle 'ruby-matchit'
+"Bundle 'textobj-rubyblock'
+"Bundle 'rubycomplete.vim'
+"Bundle 'endwise.vim'
+"Bundle 'textobj-user'
+"Bundle 'matchit.zip'
 
 " Go
 Bundle 'jnwhiteh/vim-golang'
 Bundle 'nsf/gocode', {'rtp': 'vim/'}
 
 " Utilities
-Bundle 'endwise.vim'
-Bundle 'textobj-user'
 Bundle 'The-NERD-Commenter'
 Bundle 'Syntastic'
-Bundle 'fugitive.vim'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'jeetsukumaran/vim-buffergator'
-Bundle 'matchit.zip'
 Bundle 'mileszs/ack.vim'
 Bundle 'Tagbar'
-Bundle 'ctrlp.vim'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'fugitive.vim'
 Bundle 'delimitMate.vim'
-Bundle 'vim-coffee-script'
+Bundle 'kien/ctrlp.vim'
+Bundle 'EasyMotion'
+Bundle 'AndrewRadev/switch.vim'
+Bundle 'Valloric/YouCompleteMe'
 
-" snippets
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "honza/snipmate-snippets"
-Bundle "garbas/vim-snipmate"
+" JavaScript/CoffeeScript
+Bundle 'vim-coffee-script'
 
 call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
 
 " ,a to Ack (search in files)
 nnoremap <leader>a :Ack 
+
+" ,z to open up command line with :!
+nnoremap <leader>z :!
 
 nmap <Leader>90 <Plug>ToggleAutoCloseMappings
 
@@ -251,10 +259,24 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
+if executable('coffeetags')
+  let g:tagbar_type_coffee = {
+          \ 'ctagsbin' : 'coffeetags',
+          \ 'ctagsargs' : '',
+          \ 'kinds' : [
+          \ 'f:functions',
+          \ 'o:object',
+          \ ],
+          \ 'sro' : ".",
+          \ 'kind2scope' : {
+          \ 'f' : 'object',
+          \ 'o' : 'object',
+          \ }
+          \ }
+endif"}
+
 " open buffer with list of ctags for file
 map tt :TagbarToggle<CR>
-
-" single tab activates snipmate
 
 " activate omni completion
 imap <leader>o <c-x><c-o>
@@ -265,35 +287,38 @@ imap <leader>l <c-p>
 " clear old autocmds in group
 " autocmd!
 
+" ? and ! are considered part of method
+set iskeyword+=?,!
+
+nnoremap - :Switch<cr>
+
+"" LANGUAGE SPECIFIC
 " RUBY
 " show docs based on file type
-autocmd FileType ruby nnoremap <leader>d :call ri#LookupNameUnderCursor()<CR>
+"autocmd FileType ruby nnoremap <leader>d :call ri#LookupNameUnderCursor()<CR>
+
+" Opens prompt to search ri docs
+"nnoremap  ,s :call ri#OpenSearchPrompt(0)<cr> " horizontal split
+
+" Look up keyword under cursor in ri
+"nnoremap  ,kk :call ri#LookupNameUnderCursor()<cr> " keyword lookup
 
 " save & run file
 autocmd FileType ruby map ,, :w \|! clear && ruby %<CR>
 
 " open prompt to search ri docs
-autocmd FileType ruby nnoremap  <leader>s :call ri#OpenSearchPrompt(0)<CR>
+"autocmd FileType ruby nnoremap  <leader>s :call ri#OpenSearchPrompt(0)<CR>
 
 " highlight rspec keywords
 autocmd BufRead *_spec.rb syn keyword rubyRspec context it specify it_should_behave_like before after setup subject its shared_examples_for shared_context let described_class expect
-
-" ? and ! are considered part of method
-autocmd BufRead,BufNewFile *.rb set iskeyword+=?,!
 
 autocmd FileType ruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby let g:rubycomplete_buffer_loading=1
 autocmd FileType ruby let g:rubycomplete_classes_in_global=1
 
-"for ruby, autoindent with two spaces, always expand tabs
+" autoindent with two spaces, always expand tabs
 autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass set ai sw=2 sts=2 et
 autocmd FileType python set sw=4 sts=4 et
-
-" Opens prompt to search ri docs
-nnoremap  ,s :call ri#OpenSearchPrompt(0)<cr> " horizontal split
-
-" Look up keyword under cursor in ri
-nnoremap  ,kk :call ri#LookupNameUnderCursor()<cr> " keyword lookup
 
 " GO
 au BufRead,BufNewFile *.go set filetype=go
@@ -307,15 +332,16 @@ autocmd FileType go map ,, :w \|! clear && go run %<CR>
 " show docs based on file type
 autocmd FileType go map <leader>d :Godoc<CR>
 
-" OTHERS
-" autocmd BufRead,BufNewFile *.html source ~/.vim/indent/html_grb.vim
-autocmd! BufRead,BufNewFile *.sass setfiletype sass
-
-filetype indent on
-
-" Javascript
+" JAVASCRIPT
 autocmd FileType javascript map ,, :w \|! clear && node %<CR>
+autocmd FileType javascript setl shiftwidth=2 expandtab
 
-" Coffeescript
+" COFFEESCRIPT
 au BufRead,BufNewFile *.coffee set filetype=coffee
+autocmd FileType coffee setl shiftwidth=10 expandtab
 autocmd FileType coffee map ,, :w \|! clear && node %<CR>
+map <leader>c :CoffeeCompile<cr>
+
+" OTHERS
+autocmd BufRead,BufNewFile *.html source ~/.vim/indent/html_grb.vim
+autocmd! BufRead,BufNewFile *.sass setfiletype sass
