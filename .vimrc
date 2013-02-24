@@ -66,6 +66,7 @@ set wildignore+=*/vendor/*
 set wildignore+=*/coverage/assets/*
 
 " Koding ignores
+set wildignore+=*/builders/*
 set wildignore+=*/node_modules/*
 set wildignore+=*/_archive/*
 set wildignore+=*/vagrant/*
@@ -175,8 +176,8 @@ Bundle 'tpope/vim-rails'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'vroom'
 
-Bundle 'danchoi/ri.vim'
-Bundle 'ruby-matchit'
+"Bundle 'danchoi/ri.vim'
+"Bundle 'ruby-matchit'
 "Bundle 'textobj-rubyblock'
 "Bundle 'rubycomplete.vim'
 "Bundle 'endwise.vim'
@@ -198,7 +199,8 @@ Bundle 'delimitMate.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'EasyMotion'
 Bundle 'AndrewRadev/switch.vim'
-Bundle 'Valloric/YouCompleteMe'
+
+"Bundle 'Valloric/YouCompleteMe'
 
 " JavaScript/CoffeeScript
 Bundle 'vim-coffee-script'
@@ -207,6 +209,9 @@ call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
 
 " ,a to Ack (search in files)
 nnoremap <leader>a :Ack 
+nnoremap <leader>al :Ack <C-R><C-W>
+nnoremap <leader>ac :Ack --coffee <C-R><C-W>
+nnoremap <leader>aj :Ack --js <C-R><C-W>
 
 " ,z to open up command line with :!
 nnoremap <leader>z :!
@@ -343,5 +348,5 @@ autocmd FileType coffee map ,, :w \|! clear && node %<CR>
 map <leader>c :CoffeeCompile<cr>
 
 " OTHERS
-autocmd BufRead,BufNewFile *.html source ~/.vim/indent/html_grb.vim
+" autocmd BufRead,BufNewFile *.html source ~/.vim/indent/html_grb.vim
 autocmd! BufRead,BufNewFile *.sass setfiletype sass
