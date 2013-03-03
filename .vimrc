@@ -199,8 +199,8 @@ Bundle 'delimitMate.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'EasyMotion'
 Bundle 'AndrewRadev/switch.vim'
-
 "Bundle 'Valloric/YouCompleteMe'
+Bundle 'ervandew/supertab'
 
 " JavaScript/CoffeeScript
 Bundle 'vim-coffee-script'
@@ -283,9 +283,6 @@ endif"}
 " open buffer with list of ctags for file
 map tt :TagbarToggle<CR>
 
-" activate omni completion
-imap <leader>o <c-x><c-o>
-
 " complete local variables
 imap <leader>l <c-p>
 
@@ -322,7 +319,7 @@ autocmd FileType ruby let g:rubycomplete_buffer_loading=1
 autocmd FileType ruby let g:rubycomplete_classes_in_global=1
 
 " autoindent with two spaces, always expand tabs
-autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass set ai sw=2 sts=2 et
+autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,coffee set ai sw=2 sts=2 et
 autocmd FileType python set sw=4 sts=4 et
 
 " GO
@@ -333,6 +330,14 @@ autocmd BufWritePre *.go Fmt
 
 " save & run file
 autocmd FileType go map ,, :w \|! clear && go run %<CR>
+" activate omni completion
+autocmd FileType go imap <tab> <c-x><c-o>
+
+" can't remap tab only when pumvisible
+" autocmd FileType go inoremap <expr> <tab> ((pumvisible())?("\<C-n>"):("\<tab>"))
+"imap <expr> <tab> pumvisible() ? "<tab>" : "<tab><down>"
+
+"inoremap <expr> k ((pumvisible())?("\<C-p>"):("k"))
 
 " show docs based on file type
 autocmd FileType go map <leader>d :Godoc<CR>
@@ -340,13 +345,46 @@ autocmd FileType go map <leader>d :Godoc<CR>
 " JAVASCRIPT
 autocmd FileType javascript map ,, :w \|! clear && node %<CR>
 autocmd FileType javascript setl shiftwidth=2 expandtab
+autocmd FileType javascript setl scrollbind
 
 " COFFEESCRIPT
 au BufRead,BufNewFile *.coffee set filetype=coffee
-autocmd FileType coffee setl shiftwidth=10 expandtab
 autocmd FileType coffee map ,, :w \|! clear && node %<CR>
-map <leader>c :CoffeeCompile<cr>
+autocmd FileType coffee map <leader>c :CoffeeCompile<cr>
+autocmd FileType coffee map <leader>cw :CoffeeCompile watch vert<cr>
+autocmd FileType coffee setl scrollbind
 
 " OTHERS
 " autocmd BufRead,BufNewFile *.html source ~/.vim/indent/html_grb.vim
 autocmd! BufRead,BufNewFile *.sass setfiletype sass
+
+" SYNTASTIC
+let g:syntastic_loc_list_height=5
+let g:syntastic_check_on_open=1
+" open error list in bottom buffer
+let g:syntastic_auto_loc_list=1
+" jump to location of error afer saving
+let g:syntastic_auto_jump=1
+
+" YOUCOMPLETEME
+"let g:ycm_min_num_of_chars_for_completion = 3
+
+" CNTRP
+nnoremap <leader>t :CtrlP<cr>
+
+" buffer search
+nnoremap <leader>p :CtrlPBuffer<cr>
+
+function! CleverTab()
+  if pumvisible()
+    return "\<C-N>"
+  endif
+  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+    return "\<Tab>"
+  elseif exists('&omnifunc') && &omnifunc != ''
+    return "\<C-X>\<C-O>"
+  else
+    return "\<C-N>"
+  endif
+endfunction
+inoremap <Tab> <C-R>=CleverTab()<CR>
