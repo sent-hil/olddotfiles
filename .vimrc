@@ -208,10 +208,10 @@ Bundle 'vim-coffee-script'
 call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
 
 " ,a to Ack (search in files)
-nnoremap <leader>a :Ack 
-nnoremap <leader>al :Ack <C-R><C-W>
-nnoremap <leader>ac :Ack --coffee <C-R><C-W>
-nnoremap <leader>aj :Ack --js <C-R><C-W>
+nnoremap <leader>a :Ack -a 
+nnoremap <leader>al :Ack -a "<C-R><C-W>"
+nnoremap <leader>ac :Ack --coffee -a "<C-R><C-W>"
+nnoremap <leader>aj :Ack --js -a "<C-R><C-W>"
 
 " ,z to open up command line with :!
 nnoremap <leader>z :!
@@ -345,14 +345,12 @@ autocmd FileType go map <leader>d :Godoc<CR>
 " JAVASCRIPT
 autocmd FileType javascript map ,, :w \|! clear && node %<CR>
 autocmd FileType javascript setl shiftwidth=2 expandtab
-autocmd FileType javascript setl scrollbind
 
 " COFFEESCRIPT
 au BufRead,BufNewFile *.coffee set filetype=coffee
 autocmd FileType coffee map ,, :w \|! clear && node %<CR>
 autocmd FileType coffee map <leader>c :CoffeeCompile<cr>
 autocmd FileType coffee map <leader>cw :CoffeeCompile watch vert<cr>
-autocmd FileType coffee setl scrollbind
 
 " OTHERS
 " autocmd BufRead,BufNewFile *.html source ~/.vim/indent/html_grb.vim
@@ -374,17 +372,3 @@ nnoremap <leader>t :CtrlP<cr>
 
 " buffer search
 nnoremap <leader>p :CtrlPBuffer<cr>
-
-function! CleverTab()
-  if pumvisible()
-    return "\<C-N>"
-  endif
-  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-    return "\<Tab>"
-  elseif exists('&omnifunc') && &omnifunc != ''
-    return "\<C-X>\<C-O>"
-  else
-    return "\<C-N>"
-  endif
-endfunction
-inoremap <Tab> <C-R>=CleverTab()<CR>
