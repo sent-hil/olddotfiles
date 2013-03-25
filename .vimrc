@@ -208,10 +208,11 @@ Bundle 'vim-coffee-script'
 call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
 
 " ,a to Ack (search in files)
-nnoremap <leader>a :Ack -a 
-nnoremap <leader>al :Ack -a "<C-R><C-W>"
-nnoremap <leader>ac :Ack --coffee -a "<C-R><C-W>"
-nnoremap <leader>aj :Ack --js -a "<C-R><C-W>"
+nnoremap <leader>a :Ack 
+nnoremap <leader>al :Ack "<C-R><C-W>"
+nnoremap <leader>ac :Ack --coffee "<C-R><C-W>"
+nnoremap <leader>aj :Ack --js "<C-R><C-W>"
+nnoremap <leader>ag :Ack --go "<C-R><C-W>"
 
 " ,z to open up command line with :!
 nnoremap <leader>z :!
@@ -330,14 +331,6 @@ autocmd BufWritePre *.go Fmt
 
 " save & run file
 autocmd FileType go map ,, :w \|! clear && go run %<CR>
-" activate omni completion
-autocmd FileType go imap <tab> <c-x><c-o>
-
-" can't remap tab only when pumvisible
-" autocmd FileType go inoremap <expr> <tab> ((pumvisible())?("\<C-n>"):("\<tab>"))
-"imap <expr> <tab> pumvisible() ? "<tab>" : "<tab><down>"
-
-"inoremap <expr> k ((pumvisible())?("\<C-p>"):("k"))
 
 " show docs based on file type
 autocmd FileType go map <leader>d :Godoc<CR>
@@ -358,7 +351,6 @@ autocmd! BufRead,BufNewFile *.sass setfiletype sass
 
 " SYNTASTIC
 let g:syntastic_loc_list_height=5
-let g:syntastic_check_on_open=1
 " open error list in bottom buffer
 let g:syntastic_auto_loc_list=1
 " jump to location of error afer saving
@@ -372,3 +364,8 @@ nnoremap <leader>t :CtrlP<cr>
 
 " buffer search
 nnoremap <leader>p :CtrlPBuffer<cr>
+
+" use same file inode, so koding builder doesn't freak
+set nowritebackup
+
+let g:SuperTabDefaultCompletionType = "context"
