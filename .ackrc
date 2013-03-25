@@ -6,7 +6,8 @@
 --ignore-dir=coverage
 
 --type-set=coffee=.coffee
+--type-set=go=.go
 --ignore-dir=vagrant
---ignore-dir=builders
 --ignore-dir=node_modules
+--ignore-dir=.build
 --ignore-dir=_archive
