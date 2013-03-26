@@ -201,18 +201,21 @@ Bundle 'EasyMotion'
 Bundle 'AndrewRadev/switch.vim'
 "Bundle 'Valloric/YouCompleteMe'
 Bundle 'ervandew/supertab'
+Bundle 'wikitopian/hardmode'
 
 " JavaScript/CoffeeScript
 Bundle 'vim-coffee-script'
 
 call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
 
+let g:EasyMotion_leader_key = '<Leader>'
+
 " ,a to Ack (search in files)
 nnoremap <leader>a :Ack 
-nnoremap <leader>al :Ack "<C-R><C-W>"
-nnoremap <leader>ac :Ack --coffee "<C-R><C-W>"
-nnoremap <leader>aj :Ack --js "<C-R><C-W>"
-nnoremap <leader>ag :Ack --go "<C-R><C-W>"
+"nnoremap <leader>al :Ack "<C-R><C-W>"
+"nnoremap <leader>ac :Ack --coffee "<C-R><C-W>"
+"nnoremap <leader>aj :Ack --js "<C-R><C-W>"
+"nnoremap <leader>ag :Ack --go "<C-R><C-W>"
 
 " ,z to open up command line with :!
 nnoremap <leader>z :!
@@ -307,7 +310,7 @@ nnoremap - :Switch<cr>
 "nnoremap  ,kk :call ri#LookupNameUnderCursor()<cr> " keyword lookup
 
 " save & run file
-autocmd FileType ruby map ,, :w \|! clear && ruby %<CR>
+"autocmd FileType ruby map ,, :w \|! clear && ruby %<CR>
 
 " open prompt to search ri docs
 "autocmd FileType ruby nnoremap  <leader>s :call ri#OpenSearchPrompt(0)<CR>
@@ -318,6 +321,7 @@ autocmd BufRead *_spec.rb syn keyword rubyRspec context it specify it_should_beh
 autocmd FileType ruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby let g:rubycomplete_buffer_loading=1
 autocmd FileType ruby let g:rubycomplete_classes_in_global=1
+autocmd FileType ruby nnoremap <leader>ac :Ack --ruby "<C-R><C-W>"
 
 " autoindent with two spaces, always expand tabs
 autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,coffee set ai sw=2 sts=2 et
@@ -325,25 +329,28 @@ autocmd FileType python set sw=4 sts=4 et
 
 " GO
 au BufRead,BufNewFile *.go set filetype=go
+autocmd FileType go nnoremap <leader>ac :Ack --go "<C-R><C-W>"
 
 " run Fmt before saving Go files
 autocmd BufWritePre *.go Fmt
 
 " save & run file
-autocmd FileType go map ,, :w \|! clear && go run %<CR>
+autocmd FileType go map .. :w \|! clear && go run %<CR>
 
 " show docs based on file type
 autocmd FileType go map <leader>d :Godoc<CR>
 
 " JAVASCRIPT
-autocmd FileType javascript map ,, :w \|! clear && node %<CR>
+autocmd FileType javascript map .. :w \|! clear && node %<CR>
 autocmd FileType javascript setl shiftwidth=2 expandtab
+autocmd FileType javascript nnoremap <leader>ac :Ack --js "<C-R><C-W>"
 
 " COFFEESCRIPT
 au BufRead,BufNewFile *.coffee set filetype=coffee
-autocmd FileType coffee map ,, :w \|! clear && node %<CR>
+autocmd FileType coffee map .. :w \|! clear && node %<CR>
 autocmd FileType coffee map <leader>c :CoffeeCompile<cr>
 autocmd FileType coffee map <leader>cw :CoffeeCompile watch vert<cr>
+autocmd FileType coffee nnoremap <leader>ac :Ack --coffee "<C-R><C-W>"
 
 " OTHERS
 " autocmd BufRead,BufNewFile *.html source ~/.vim/indent/html_grb.vim
@@ -369,3 +376,6 @@ nnoremap <leader>p :CtrlPBuffer<cr>
 set nowritebackup
 
 let g:SuperTabDefaultCompletionType = "context"
+
+autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
