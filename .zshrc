@@ -68,7 +68,8 @@ export EDITOR=vim
 # Turn off damn auto correct
 unsetopt correct_all
 
-export GOPATH=$HOME/play/gocode:/$HOME/others/koding/go
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/work/koding/go
 
 source ~/.go_completions
 ulimit -n 1024
