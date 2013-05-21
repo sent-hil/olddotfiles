@@ -201,12 +201,13 @@ Bundle 'EasyMotion'
 Bundle 'AndrewRadev/switch.vim'
 "Bundle 'Valloric/YouCompleteMe'
 Bundle 'ervandew/supertab'
-Bundle 'wikitopian/hardmode'
+Bundle 'Tagbar'
+Bundle 'Tabular'
 
 " JavaScript/CoffeeScript
 Bundle 'vim-coffee-script'
 
-call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
+" call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
 
 let g:EasyMotion_leader_key = '<Leader>'
 
@@ -347,10 +348,12 @@ autocmd FileType javascript nnoremap <leader>ac :Ack --js "<C-R><C-W>"
 
 " COFFEESCRIPT
 au BufRead,BufNewFile *.coffee set filetype=coffee
-autocmd FileType coffee map .. :w \|! clear && node %<CR>
+autocmd FileType coffee map .. :w \|! clear && coffee %<CR>
 autocmd FileType coffee map <leader>c :CoffeeCompile<cr>
 autocmd FileType coffee map <leader>cw :CoffeeCompile watch vert<cr>
 autocmd FileType coffee nnoremap <leader>ac :Ack --coffee "<C-R><C-W>"
+
+au BufRead,BufNewFile *.sls set filetype=yaml
 
 " OTHERS
 " autocmd BufRead,BufNewFile *.html source ~/.vim/indent/html_grb.vim
@@ -377,5 +380,10 @@ set nowritebackup
 
 let g:SuperTabDefaultCompletionType = "context"
 
-autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
-nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
+let mapleader=','
+if exists(":Tabularize")
+  nmap <Leader>a= :Tabularize /=<CR>
+  vmap <Leader>a= :Tabularize /=<CR>
+  nmap <Leader>a: :Tabularize /:\zs<CR>
+  vmap <Leader>a: :Tabularize /:\zs<CR>
+endif
