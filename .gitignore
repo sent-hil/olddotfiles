@@ -1,2 +1,3 @@
 .local/share/autojump/*
 .zsh-update
+.bash_history
