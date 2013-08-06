@@ -28,3 +28,5 @@
 [core]
 	editor = /usr/bin/vim
 	pager = less -FRSX
+[web]
+	browser = chrome
