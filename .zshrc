@@ -77,3 +77,5 @@ ulimit -n 1024
 [ "$TERM" = "xterm" ] && TERM="xterm-256color"
 
 export D8_PATH=/Users/senthil/others/js/node/deps/v8
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
