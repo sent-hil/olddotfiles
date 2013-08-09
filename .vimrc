@@ -189,6 +189,8 @@ Bundle 'jnwhiteh/vim-golang'
 Bundle 'nsf/gocode', {'rtp': 'vim/'}
 
 " Utilities
+Bundle "dgryski/vim-godef"
+Bundle 'tpope/vim-fugitive'
 Bundle 'The-NERD-Commenter'
 Bundle 'Syntastic'
 Bundle 'mileszs/ack.vim'
@@ -203,6 +205,11 @@ Bundle 'AndrewRadev/switch.vim'
 Bundle 'ervandew/supertab'
 Bundle 'Tagbar'
 Bundle 'Tabular'
+Bundle 'wting/rust.vim'
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
+Bundle "sent-hil/vim-snippets"
 
 " JavaScript/CoffeeScript
 Bundle 'vim-coffee-script'
@@ -334,6 +341,16 @@ autocmd FileType go nnoremap <leader>ac :Ack --go "<C-R><C-W>"
 
 " run Fmt before saving Go files
 autocmd BufWritePre *.go Fmt
+
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    Fmt
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+
+autocmd FileType go autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
 " save & run file
 autocmd FileType go map .. :w \|! clear && go run %<CR>
