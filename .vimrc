@@ -206,6 +206,10 @@ Bundle 'ervandew/supertab'
 Bundle 'Tagbar'
 Bundle 'Tabular'
 Bundle 'wting/rust.vim'
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
+Bundle "honza/vim-snippets"
 
 " JavaScript/CoffeeScript
 Bundle 'vim-coffee-script'
