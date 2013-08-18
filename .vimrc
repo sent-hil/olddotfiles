@@ -404,3 +404,49 @@ if exists(":Tabularize")
   nmap <Leader>a: :Tabularize /:\zs<CR>
   vmap <Leader>a: :Tabularize /:\zs<CR>
 endif
+
+set nofoldenable
+
+function RenameFile()
+  let old_name = expand('%')
+  let new_name = input('New file name: ', expand('%'), 'file')
+  if new_name != '' && new_name != old_name
+    exec ':saveas ' . new_name
+    exec ':silent !rm ' . old_name
+    redraw!
+  endif
+endfunction
+
+function! OpenTestAlternate()
+  let current_file = expand("%")
+  let new_file = current_file
+  let in_spec = match(current_file, '_test\.go$') != -1
+  let going_to_spec = !in_spec
+  if going_to_spec
+    let new_file = substitute(new_file, '\.e\?go$', '_test.go', '')
+  else
+    let new_file = substitute(new_file, '_test\.go$', '.go', '')
+  endif
+  exec ':e ' . new_file
+endfunction
+autocmd FileType go nnoremap <leader>t :call OpenTestAlternate()<cr>
+
+let g:ctrlp_extensions = ['line']
+let g:ctrlp_prompt_mappings = {
+  \ 'PrtHistory(-1)': ['<c-up>'],
+  \ 'PrtHistory(1)':  ['<c-down>'],
+  \ 'ToggleType(1)':  ['<c-p>'],
+  \ 'ToggleType(-1)': ['<c-l>'],
+  \ 'PrtCurRight()':  ['<right>']
+  \ }
+
+function RunGoTestUnderLine()
+  let line_text = getline(".")
+  let test_name = matchstr(getline("."), "Test.[a-zA-Z]*")
+  if test_name != ""
+    exec '!go test -gocheck.f ' . test_name
+  else
+    echo 'No test under line'
+  endif
+endfunction
+autocmd FileType go nnoremap <leader>s :call RunGoTestUnderLine()<cr>
