@@ -172,9 +172,9 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 "Ruby/Rails
-Bundle 'tpope/vim-rails'
+"Bundle 'tpope/vim-rails'
 Bundle 'vim-ruby/vim-ruby'
-Bundle 'vroom'
+"Bundle 'vroom'
 
 "Bundle 'danchoi/ri.vim'
 "Bundle 'ruby-matchit'
@@ -205,7 +205,7 @@ Bundle 'AndrewRadev/switch.vim'
 Bundle 'ervandew/supertab'
 Bundle 'Tagbar'
 Bundle 'Tabular'
-Bundle 'wting/rust.vim'
+"Bundle 'wting/rust.vim'
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
@@ -444,6 +444,8 @@ let g:ctrlp_prompt_mappings = {
   \ 'ToggleType(-1)': ['<c-l>'],
   \ 'PrtCurRight()':  ['<right>']
   \ }
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|tags\|vagrant'
+let g:ctrlp_clear_cache_on_exit=0
 
 function RunGoTestUnderLine()
   let line_text = getline(".")
