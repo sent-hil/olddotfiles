@@ -28,6 +28,8 @@
 [core]
 	editor = /usr/bin/vim
 	pager = less -FRSX
-	excludesfile = /Users/senthil/.gitignore_global
+	excludesfile = /Users/senthil/.gitignore
 [web]
 	browser = chrome
+[init]
+	templatedir = ~/.git_template

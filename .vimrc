@@ -214,6 +214,8 @@ Bundle "sent-hil/vim-snippets"
 " JavaScript/CoffeeScript
 Bundle 'vim-coffee-script'
 
+Bundle 'acoffman/Jumpback.vim'
+
 " call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
 
 let g:EasyMotion_leader_key = '<Leader>'
@@ -337,6 +339,7 @@ autocmd FileType python set sw=4 sts=4 et
 
 " GO
 au BufRead,BufNewFile *.go set filetype=go
+
 autocmd FileType go nnoremap <leader>ac :Ack --go "<C-R><C-W>"
 
 " run Fmt before saving Go files
@@ -354,6 +357,8 @@ autocmd FileType go autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitesp
 
 " save & run file
 autocmd FileType go map .. :w \|! clear && go run %<CR>
+
+au BufRead,BufNewFile *_test.go map .. :w \|! clear && go run %<CR>
 
 " show docs based on file type
 autocmd FileType go map <leader>d :Godoc<CR>
@@ -429,7 +434,7 @@ function! OpenTestAlternate()
   endif
   exec ':e ' . new_file
 endfunction
-autocmd FileType go nnoremap <leader>t :call OpenTestAlternate()<cr>
+autocmd FileType go nnoremap <leader>s :call OpenTestAlternate()<cr>
 
 let g:ctrlp_extensions = ['line']
 let g:ctrlp_prompt_mappings = {
@@ -444,9 +449,11 @@ function RunGoTestUnderLine()
   let line_text = getline(".")
   let test_name = matchstr(getline("."), "Test.[a-zA-Z]*")
   if test_name != ""
-    exec '!go test -gocheck.f ' . test_name
+    exec '!clear && go test -config vagrant -gocheck.f ' . test_name
   else
     echo 'No test under line'
   endif
 endfunction
-autocmd FileType go nnoremap <leader>s :call RunGoTestUnderLine()<cr>
+autocmd FileType go nnoremap <leader>t :w \| :call RunGoTestUnderLine()<CR>
+
+set tags=./tags;/
