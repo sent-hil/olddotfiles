@@ -2,3 +2,4 @@
 .zsh-update
 .bash_history
 tags
+.config/fish/fish_history
