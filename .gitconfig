@@ -1,6 +1,6 @@
 [user]
-	name = sent-hil
-	email = me@sent-hil.com
+	name = Senthil
+	email = senthil@koding.com
 [diff]
 [color]
   ui = auto
@@ -20,7 +20,7 @@
   dh = diff HEAD
   fa = fetch --all
 [merge]
-  tool = vimdiff
+	tool = diffmerge
 [github]
 	user = sent-hil
 [push]
@@ -33,3 +33,9 @@
 	browser = chrome
 [init]
 	templatedir = ~/.git_template
+[mergetool "diffmerge"]
+	cmd = diffmerge --merge\n--result=$MERGED $LOCAL $BASE $REMOTE
+	trustExitCode = true
+[branch]
+  autosetupmerge = always
+  autosetuprebase = always

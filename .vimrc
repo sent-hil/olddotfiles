@@ -1,5 +1,5 @@
-" Use Vim settings, rather then Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
+" use vim settings, rather then vi settings (much better!).
+" this must be first, because it changes other options as a side effect.
 set nocompatible               " be iMproved
 filetype off                   " required!
 
@@ -55,6 +55,7 @@ set wildmode=longest,list
 set cmdheight=1
 
 " if longer than 78, it'll create a new line
+" annoying when working with go
 set textwidth=78
 
 set winheight=10
@@ -213,15 +214,18 @@ Bundle "sent-hil/vim-snippets"
 
 " JavaScript/CoffeeScript
 Bundle 'vim-coffee-script'
+Bundle 'scala.vim'
 
 Bundle 'acoffman/Jumpback.vim'
+
+Bundle 'vim-scripts/greplace.vim'
 
 " call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
 
 let g:EasyMotion_leader_key = '<Leader>'
 
 " ,a to Ack (search in files)
-nnoremap <leader>a :Ack 
+nnoremap <leader>a :Ack "<C-R><C-W>"
 "nnoremap <leader>al :Ack "<C-R><C-W>"
 "nnoremap <leader>ac :Ack --coffee "<C-R><C-W>"
 "nnoremap <leader>aj :Ack --js "<C-R><C-W>"
@@ -339,11 +343,18 @@ autocmd FileType python set sw=4 sts=4 et
 
 " GO
 au BufRead,BufNewFile *.go set filetype=go
+au BufRead,BufNewFile *.go set textwidth=1000
 
 autocmd FileType go nnoremap <leader>ac :Ack --go "<C-R><C-W>"
 
+" Python
+autocmd FileType python nnoremap <leader>ac :Ack --python "<C-R><C-W>"
+
 " run Fmt before saving Go files
 autocmd BufWritePre *.go Fmt
+
+" Scala
+au BufRead,BufNewFile *.scala set filetype=scala
 
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
@@ -436,15 +447,15 @@ function! OpenTestAlternate()
 endfunction
 autocmd FileType go nnoremap <leader>s :call OpenTestAlternate()<cr>
 
-let g:ctrlp_extensions = ['line']
-let g:ctrlp_prompt_mappings = {
-  \ 'PrtHistory(-1)': ['<c-up>'],
-  \ 'PrtHistory(1)':  ['<c-down>'],
-  \ 'ToggleType(1)':  ['<c-p>'],
-  \ 'ToggleType(-1)': ['<c-l>'],
-  \ 'PrtCurRight()':  ['<right>']
-  \ }
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|tags\|vagrant'
+"let g:ctrlp_extensions = ['line']
+"let g:ctrlp_prompt_mappings = {
+  "\ 'PrtHistory(-1)': ['<c-up>'],
+  "\ 'PrtHistory(1)':  ['<c-down>'],
+  "\ 'ToggleType(1)':  ['<c-p>'],
+  "\ 'ToggleType(-1)': ['<c-l>'],
+  "\ 'PrtCurRight()':  ['<right>']
+  "\ }
+"let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|tags\|vagrant'
 let g:ctrlp_clear_cache_on_exit=0
 
 function RunGoTestUnderLine()
@@ -459,3 +470,9 @@ endfunction
 autocmd FileType go nnoremap <leader>t :w \| :call RunGoTestUnderLine()<CR>
 
 set tags=./tags;/
+
+" case sensitive search
+set noic
+
+" delete trailing whitespace before save
+autocmd BufWritePre * :%s/\s\+$//e
