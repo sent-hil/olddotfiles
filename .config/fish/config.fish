@@ -36,9 +36,11 @@ function fish_prompt --description 'Write out the prompt'
 end
 
 if status --is-login
-  set PATH /usr/local/go/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin /usr/local/sbin
+  set PATH /usr/local/go/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin /usr/local/sbin /usr/local/share/python
   set GOPATH /Users/senthil/Documents/work/koding/go
   set GOROOT /usr/local/go
   set JAVA_HOME /Library/Java/JavaVirtualMachines/jdk1.7.0_25.jdk/Contents/Home
   #set GOBIN  /usr/local/go/bin
 end
+
+set -xU PYTHONSTARTUP ~/.pythonrc

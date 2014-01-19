@@ -3,3 +3,5 @@
 .bash_history
 tags
 .config/fish/fish_history
+.config/sparkleshare/*
+.DS_Store

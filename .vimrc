@@ -48,8 +48,15 @@ set softtabstop=2
 set autoindent
 set smartindent
 set laststatus=2
+set copyindent                " copy the previous indentation on autoindenting
+"
+" Show matching brackets when text indicator is over them
 set showmatch
+
+" Makes search act like search in modern browsers
 set incsearch
+
+" Highlight search results
 set hls
 set wildmode=longest,list
 set cmdheight=1
@@ -351,7 +358,7 @@ autocmd FileType go nnoremap <leader>ac :Ack --go "<C-R><C-W>"
 autocmd FileType python nnoremap <leader>ac :Ack --python "<C-R><C-W>"
 
 " run Fmt before saving Go files
-autocmd BufWritePre *.go Fmt
+" autocmd BufWritePre *.go Fmt
 
 " Scala
 au BufRead,BufNewFile *.scala set filetype=scala
@@ -472,7 +479,62 @@ autocmd FileType go nnoremap <leader>t :w \| :call RunGoTestUnderLine()<CR>
 set tags=./tags;/
 
 " case sensitive search
-set noic
+" disable this since most of the time you want case insensitive
+" set noic
 
 " delete trailing whitespace before save
 autocmd BufWritePre * :%s/\s\+$//e
+
+" NERD COMMENTER
+" adds space before beginning of comment
+let NERDSpaceDelims=1
+
+" prevents duplicate comment prefixes
+let NERDDefaultNesting=0
+
+" highlight characters over 80 with red background
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
+
+" From https://github.com/amix/vimrc/blob/master/vimrcs/extended.vim
+
+" persist undos across sessions
+try
+  set undodir=~/.vim_runtime/temp_dirs/undodir
+  set undofile
+catch
+endtry
+
+" Bash like keys for the command line
+cnoremap <C-A> <Home>
+cnoremap <C-E> <End>
+cnoremap <C-K> <C-U> " delete from current to end of line
+cnoremap <C-P> <Up>
+cnoremap <C-N> <Down>
+
+" Treat long lines as break lines (useful when moving around in them)
+map j gj
+map k gk
+
+" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+map <space> /
+map <c-space> ?
+
+" Switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
+" Remember info about open buffers on close
+set viminfo^=%"
+
+map 0 ^
+
+" Remove the Windows ^M - when the encodings gets messed up
+noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
+" Toggle paste mode on and off
+map <leader>pp :setlocal paste!<cr>
