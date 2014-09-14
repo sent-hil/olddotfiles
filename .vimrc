@@ -8,7 +8,7 @@ set background=dark
 colorscheme solarized
 let g:solarized_termcolors=256
 
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim
 
 filetype plugin indent on
 
@@ -198,7 +198,6 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'EasyMotion'
 Bundle 'AndrewRadev/switch.vim'
 Bundle 'ervandew/supertab'
-Bundle 'Tagbar'
 Bundle 'Tabular'
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
