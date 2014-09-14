@@ -36,7 +36,7 @@ function fish_prompt --description 'Write out the prompt'
 end
 
 if status --is-login
-  set PATH /usr/local/go/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin /usr/local/sbin /usr/local/share/python /usr/local/Cellar/go/1.3/libexec/bin
+  set PATH /usr/local/go/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin /usr/local/sbin /usr/local/share/python /usr/local/Cellar/go/1.3/libexec/bin /Users/senthil/.dotify/.gobin
   set GOPATH /Users/senthil/Documents/work/koding/go
   # set GOROOT /usr/local/go
   set GOROOT /usr/local/Cellar/go/1.3/libexec
