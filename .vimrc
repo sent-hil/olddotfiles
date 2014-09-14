@@ -559,8 +559,6 @@ let g:syntastic_mode_map={ 'mode': 'active',
 " Show all tabs:
 " /\t"
 
-:nmap <silent> <leader>d <Plug>DashSearch
-
 """ move lines up, down
 nnoremap <C-u> :m .+1<CR>==
 nnoremap <C-i> :m .-2<CR>==
