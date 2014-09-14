@@ -5,3 +5,4 @@ tags
 .config/fish/fish_history
 .config/sparkleshare/*
 .DS_Store
+.config/fish/fishd.*
