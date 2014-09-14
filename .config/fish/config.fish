@@ -36,11 +36,24 @@ function fish_prompt --description 'Write out the prompt'
 end
 
 if status --is-login
-  set PATH /usr/local/go/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin /usr/local/sbin /usr/local/share/python
+  set PATH /usr/local/go/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin /usr/local/sbin /usr/local/share/python /usr/local/Cellar/go/1.3/libexec/bin
   set GOPATH /Users/senthil/Documents/work/koding/go
-  set GOROOT /usr/local/go
+  # set GOROOT /usr/local/go
+  set GOROOT /usr/local/Cellar/go/1.3/libexec
   set JAVA_HOME /Library/Java/JavaVirtualMachines/jdk1.7.0_25.jdk/Contents/Home
   #set GOBIN  /usr/local/go/bin
 end
 
 set -xU PYTHONSTARTUP ~/.pythonrc
+
+function webconnect
+  /usr/local/bin/csshX --sorthosts --tile_y 1 "webserver-$argv[1]a.sj.koding.com" "webserver-$argv[1]b.sj.koding.com" "webserver-$argv[1]c.sj.koding.com"
+end
+
+function socialconnect
+  /usr/local/bin/csshX --sorthosts --tile_y 1 "socialserver-$argv[1]a.sj.koding.com" "socialserver-$argv[1]b.sj.koding.com"
+end
+
+function brokerconnect
+  /usr/local/bin/csshX --sorthosts --tile_y 1 "broker-$argv[1]a.sj.koding.com" "broker-$argv[1]b.sj.koding.com"
+end

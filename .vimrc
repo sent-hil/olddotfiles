@@ -46,7 +46,6 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set autoindent
-set smartindent
 set laststatus=2
 set copyindent                " copy the previous indentation on autoindenting
 "
@@ -63,7 +62,7 @@ set cmdheight=1
 
 " if longer than 78, it'll create a new line
 " annoying when working with go
-set textwidth=78
+" set textwidth=78
 
 set winheight=10
 set winminheight=7
@@ -193,7 +192,7 @@ Bundle 'vim-ruby/vim-ruby'
 "Bundle 'matchit.zip'
 
 " Go
-Bundle 'jnwhiteh/vim-golang'
+Bundle 'fatih/vim-go'
 Bundle 'nsf/gocode', {'rtp': 'vim/'}
 
 " Utilities
@@ -218,14 +217,21 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 Bundle "sent-hil/vim-snippets"
+Bundle "Raimondi/delimitMate"
 
 " JavaScript/CoffeeScript
 Bundle 'vim-coffee-script'
 Bundle 'scala.vim'
 
-Bundle 'acoffman/Jumpback.vim'
+" Bundle 'acoffman/Jumpback.vim'
 
 Bundle 'vim-scripts/greplace.vim'
+
+" Dash
+" Bundle 'rizzatti/funcoo.vim'
+" Bundle 'rizzatti/dash.vim'
+
+" Bundle "scrooloose/nerdtree"
 
 " call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
 
@@ -322,19 +328,19 @@ nnoremap - :Switch<cr>
 "" LANGUAGE SPECIFIC
 " RUBY
 " show docs based on file type
-"autocmd FileType ruby nnoremap <leader>d :call ri#LookupNameUnderCursor()<CR>
+" autocmd FileType ruby nnoremap <jleader>d :call ri#LookupNameUnderCursor()<CR>
 
 " Opens prompt to search ri docs
-"nnoremap  ,s :call ri#OpenSearchPrompt(0)<cr> " horizontal split
+nnoremap  ,s :call ri#OpenSearchPrompt(0)<cr> " horizontal split
 
 " Look up keyword under cursor in ri
-"nnoremap  ,kk :call ri#LookupNameUnderCursor()<cr> " keyword lookup
+nnoremap  ,kk :call ri#LookupNameUnderCursor()<cr> " keyword lookup
 
 " save & run file
-"autocmd FileType ruby map ,, :w \|! clear && ruby %<CR>
+autocmd FileType ruby map ,, :w \|! clear && ruby %<CR>
 
 " open prompt to search ri docs
-"autocmd FileType ruby nnoremap  <leader>s :call ri#OpenSearchPrompt(0)<CR>
+autocmd FileType ruby nnoremap  <leader>s :call ri#OpenSearchPrompt(0)<CR>
 
 " highlight rspec keywords
 autocmd BufRead *_spec.rb syn keyword rubyRspec context it specify it_should_behave_like before after setup subject its shared_examples_for shared_context let described_class expect
@@ -371,7 +377,7 @@ fun! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfun
 
-autocmd FileType go autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+" autocmd FileType go autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
 " save & run file
 autocmd FileType go map .. :w \|! clear && go run %<CR>
@@ -379,7 +385,7 @@ autocmd FileType go map .. :w \|! clear && go run %<CR>
 au BufRead,BufNewFile *_test.go map .. :w \|! clear && go run %<CR>
 
 " show docs based on file type
-autocmd FileType go map <leader>d :Godoc<CR>
+" autocmd FileType go map <leader>d :Godoc<CR>
 
 " JAVASCRIPT
 autocmd FileType javascript map .. :w \|! clear && node %<CR>
@@ -398,6 +404,13 @@ au BufRead,BufNewFile *.sls set filetype=yaml
 " OTHERS
 " autocmd BufRead,BufNewFile *.html source ~/.vim/indent/html_grb.vim
 autocmd! BufRead,BufNewFile *.sass setfiletype sass
+
+" TEXT
+au BufRead,BufNewFile *.txt set filetype=text
+autocmd FileType text set textwidth=0
+
+" markdown syntax highlighting isn't very good, _ screws up everything
+au BufRead,BufNewFile *.md set filetype=text
 
 " SYNTASTIC
 let g:syntastic_loc_list_height=5
@@ -493,8 +506,8 @@ let NERDSpaceDelims=1
 let NERDDefaultNesting=0
 
 " highlight characters over 80 with red background
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+" match OverLength /\%81v.\+/
 
 " From https://github.com/amix/vimrc/blob/master/vimrcs/extended.vim
 
@@ -542,3 +555,27 @@ map <leader>pp :setlocal paste!<cr>
 let g:syntastic_mode_map={ 'mode': 'active',
                      \ 'active_filetypes': [],
                      \ 'passive_filetypes': ['html'] }
+
+" Show all tabs:
+" /\t"
+
+:nmap <silent> <leader>d <Plug>DashSearch
+
+""" move lines up, down
+nnoremap <C-u> :m .+1<CR>==
+nnoremap <C-i> :m .-2<CR>==
+
+" Insert mode
+inoremap <C-u> <ESC>:m .+1<CR>==gi
+inoremap <C-i> <ESC>:m .-2<CR>==gi
+
+" Visual mode
+vnoremap <C-u> :m '>+1<CR>gv=gv
+vnoremap <C-i> :m '<-2<CR>gv=gv
+"""
+
+au FileType go nmap <Leader>s <Plug>(go-implements)
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>d <Plug>(go-def)
+
+let g:go_bin_path = "~/.dotify/.gobin"
