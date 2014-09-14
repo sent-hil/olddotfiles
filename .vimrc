@@ -440,7 +440,7 @@ function! OpenTestAlternate()
   endif
   exec ':e ' . new_file
 endfunction
-autocmd FileType go nnoremap <leader>a :call OpenTestAlternate()<cr>
+autocmd FileType go nnoremap <leader>f :call OpenTestAlternate()<cr>
 
 "let g:ctrlp_extensions = ['line']
 "let g:ctrlp_prompt_mappings = {
