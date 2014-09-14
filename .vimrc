@@ -179,24 +179,13 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 "Ruby/Rails
-"Bundle 'tpope/vim-rails'
 Bundle 'vim-ruby/vim-ruby'
-"Bundle 'vroom'
-
-"Bundle 'danchoi/ri.vim'
-"Bundle 'ruby-matchit'
-"Bundle 'textobj-rubyblock'
-"Bundle 'rubycomplete.vim'
-"Bundle 'endwise.vim'
-"Bundle 'textobj-user'
-"Bundle 'matchit.zip'
 
 " Go
 Bundle 'fatih/vim-go'
 Bundle 'nsf/gocode', {'rtp': 'vim/'}
 
 " Utilities
-Bundle "dgryski/vim-godef"
 Bundle 'tpope/vim-fugitive'
 Bundle 'The-NERD-Commenter'
 Bundle 'Syntastic'
@@ -208,11 +197,9 @@ Bundle 'delimitMate.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'EasyMotion'
 Bundle 'AndrewRadev/switch.vim'
-"Bundle 'Valloric/YouCompleteMe'
 Bundle 'ervandew/supertab'
 Bundle 'Tagbar'
 Bundle 'Tabular'
-"Bundle 'wting/rust.vim'
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
@@ -221,19 +208,8 @@ Bundle "Raimondi/delimitMate"
 
 " JavaScript/CoffeeScript
 Bundle 'vim-coffee-script'
-Bundle 'scala.vim'
-
-" Bundle 'acoffman/Jumpback.vim'
-
-Bundle 'vim-scripts/greplace.vim'
-
-" Dash
-" Bundle 'rizzatti/funcoo.vim'
-" Bundle 'rizzatti/dash.vim'
 
 " Bundle "scrooloose/nerdtree"
-
-" call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
 
 let g:EasyMotion_leader_key = '<Leader>'
 
