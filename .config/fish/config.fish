@@ -36,7 +36,8 @@ function fish_prompt --description 'Write out the prompt'
 end
 
 if status --is-login
-  set PATH /usr/local/go/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin /usr/local/sbin /usr/local/share/python /usr/local/Cellar/go/1.3/libexec/bin /Users/senthil/.dotify/.gobin
+  set PATH /Users/senthil/o-ri/ /Users/senthil/.rbenv/versions/2.1.5/bin/ /usr/local/go/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin /usr/local/sbin /usr/local/Cellar/go/1.3/libexec/bin /Users/senthil/.dotify/.gobin /Users/senthil/Documents/work/koding/go/bin
+
   set GOPATH /Users/senthil/Documents/work/koding/go
   # set GOROOT /usr/local/go
   set GOROOT /usr/local/Cellar/go/1.3/libexec
@@ -57,3 +58,6 @@ end
 function brokerconnect
   /usr/local/bin/csshX --sorthosts --tile_y 1 "broker-$argv[1]a.sj.koding.com" "broker-$argv[1]b.sj.koding.com"
 end
+
+set -x DOCKER_CERT_PATH /Users/senthil/.boot2docker/certs/boot2docker-vm
+set -x DOCKER_TLS_VERIFY 1
