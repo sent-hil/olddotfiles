@@ -45,10 +45,10 @@ set expandtab
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
-set autoindent
+" set autoindent
 set laststatus=2
-set copyindent                " copy the previous indentation on autoindenting
-"
+" set copyindent                " copy the previous indentation on autoindenting
+
 " Show matching brackets when text indicator is over them
 set showmatch
 
@@ -59,10 +59,6 @@ set incsearch
 set hls
 set wildmode=longest,list
 set cmdheight=1
-
-" if longer than 78, it'll create a new line
-" annoying when working with go
-" set textwidth=78
 
 set winheight=10
 set winminheight=7
@@ -183,7 +179,7 @@ Bundle 'vim-ruby/vim-ruby'
 
 " Go
 Bundle 'fatih/vim-go'
-Bundle 'nsf/gocode', {'rtp': 'vim/'}
+" Bundle 'nsf/gocode', {'rtp': 'vim/'}
 
 " Utilities
 Bundle 'tpope/vim-fugitive'
@@ -207,6 +203,8 @@ Bundle "Raimondi/delimitMate"
 
 " JavaScript/CoffeeScript
 Bundle 'vim-coffee-script'
+
+Bundle "skwp/greplace.vim"
 
 " Bundle "scrooloose/nerdtree"
 
@@ -295,24 +293,14 @@ imap <leader>l <c-p>
 " clear old autocmds in group
 " autocmd!
 
-" ? and ! are considered part of method
-set iskeyword+=?,!
-
 nnoremap - :Switch<cr>
 
 "" LANGUAGE SPECIFIC
 " RUBY
-" show docs based on file type
-" autocmd FileType ruby nnoremap <jleader>d :call ri#LookupNameUnderCursor()<CR>
-
-" Opens prompt to search ri docs
-nnoremap  ,s :call ri#OpenSearchPrompt(0)<cr> " horizontal split
-
-" Look up keyword under cursor in ri
-nnoremap  ,kk :call ri#LookupNameUnderCursor()<cr> " keyword lookup
 
 " save & run file
-autocmd FileType ruby map ,, :w \|! clear && ruby %<CR>
+autocmd FileType ruby map .. :w \|! clear && ruby %<CR>
+autocmd BufWritePre *.rb !ripper-tags -R --exclude=vendor
 
 " open prompt to search ri docs
 autocmd FileType ruby nnoremap  <leader>s :call ri#OpenSearchPrompt(0)<CR>
@@ -325,42 +313,22 @@ autocmd FileType ruby let g:rubycomplete_buffer_loading=1
 autocmd FileType ruby let g:rubycomplete_classes_in_global=1
 autocmd FileType ruby nnoremap <leader>ac :Ack --ruby "<C-R><C-W>"
 
+" ? and ! are considered part of method
+autocmd FileType ruby set iskeyword+=?,!
+
+
 " autoindent with two spaces, always expand tabs
 autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,coffee set ai sw=2 sts=2 et
 autocmd FileType python set sw=4 sts=4 et
-
-" GO
-au BufRead,BufNewFile *.go set filetype=go
-au BufRead,BufNewFile *.go set textwidth=1000
-
-autocmd FileType go nnoremap <leader>ac :Ack --go "<C-R><C-W>"
-
-" Python
 autocmd FileType python nnoremap <leader>ac :Ack --python "<C-R><C-W>"
 
-" run Fmt before saving Go files
-" autocmd BufWritePre *.go Fmt
-
-" Scala
-au BufRead,BufNewFile *.scala set filetype=scala
-
-fun! <SID>StripTrailingWhitespaces()
-    let l = line(".")
-    let c = col(".")
-    Fmt
-    %s/\s\+$//e
-    call cursor(l, c)
-endfun
-
-" autocmd FileType go autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
-
-" save & run file
+" GO
+au BufRead,BufNewFile *.go.old set filetype=go
+au BufRead,BufNewFile *.go set filetype=go
+au BufRead,BufNewFile *.go set textwidth=1000
+autocmd FileType go nnoremap <leader>ac :Ack --go "<C-R><C-W>"
 autocmd FileType go map .. :w \|! clear && go run %<CR>
-
-au BufRead,BufNewFile *_test.go map .. :w \|! clear && go run %<CR>
-
-" show docs based on file type
-" autocmd FileType go map <leader>d :Godoc<CR>
+au BufRead,BufNewFile *_test.go map .. :w \|! clear && go test<CR>
 
 " JAVASCRIPT
 autocmd FileType javascript map .. :w \|! clear && node %<CR>
@@ -374,9 +342,9 @@ autocmd FileType coffee map <leader>c :CoffeeCompile<cr>
 autocmd FileType coffee map <leader>cw :CoffeeCompile watch vert<cr>
 autocmd FileType coffee nnoremap <leader>ac :Ack --coffee "<C-R><C-W>"
 
+" OTHERS
 au BufRead,BufNewFile *.sls set filetype=yaml
 
-" OTHERS
 " autocmd BufRead,BufNewFile *.html source ~/.vim/indent/html_grb.vim
 autocmd! BufRead,BufNewFile *.sass setfiletype sass
 
@@ -389,13 +357,12 @@ au BufRead,BufNewFile *.md set filetype=text
 
 " SYNTASTIC
 let g:syntastic_loc_list_height=5
+
 " open error list in bottom buffer
 let g:syntastic_auto_loc_list=1
+
 " jump to location of error afer saving
 let g:syntastic_auto_jump=1
-
-" YOUCOMPLETEME
-"let g:ycm_min_num_of_chars_for_completion = 3
 
 " CNTRP
 nnoremap <leader>t :CtrlP<cr>
@@ -440,17 +407,8 @@ function! OpenTestAlternate()
   endif
   exec ':e ' . new_file
 endfunction
-autocmd FileType go nnoremap <leader>f :call OpenTestAlternate()<cr>
+autocmd FileType go nnoremap <leader>s :call OpenTestAlternate()<cr>
 
-"let g:ctrlp_extensions = ['line']
-"let g:ctrlp_prompt_mappings = {
-  "\ 'PrtHistory(-1)': ['<c-up>'],
-  "\ 'PrtHistory(1)':  ['<c-down>'],
-  "\ 'ToggleType(1)':  ['<c-p>'],
-  "\ 'ToggleType(-1)': ['<c-l>'],
-  "\ 'PrtCurRight()':  ['<right>']
-  "\ }
-"let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|tags\|vagrant'
 let g:ctrlp_clear_cache_on_exit=0
 
 function RunGoTestUnderLine()
@@ -479,10 +437,6 @@ let NERDSpaceDelims=1
 
 " prevents duplicate comment prefixes
 let NERDDefaultNesting=0
-
-" highlight characters over 80 with red background
-" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-" match OverLength /\%81v.\+/
 
 " From https://github.com/amix/vimrc/blob/master/vimrcs/extended.vim
 
@@ -547,8 +501,16 @@ vnoremap <C-u> :m '>+1<CR>gv=gv
 vnoremap <C-i> :m '<-2<CR>gv=gv
 """
 
-au FileType go nmap <Leader>s <Plug>(go-implements)
+au FileType go nmap <Leader>f <Plug>(go-implements)
 au FileType go nmap <Leader>i <Plug>(go-info)
-au FileType go nmap <Leader>d <Plug>(go-def)
+au FileType go nmap <C-]> <Plug>(go-def)
 
 let g:go_bin_path = "~/.dotify/.gobin"
+let g:go_fmt_command = "goimports"
+
+let g:syntastic_aggregate_errors = 1
+
+autocmd! BufRead,BufNewFile Gomfile setfiletype ruby
+
+set exrc
+set secure
