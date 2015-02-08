@@ -64,6 +64,9 @@ set winheight=10
 set winminheight=7
 set winheight=999
 
+" ignore ctags
+set wildignore+=*/tags
+
 " general ruby ignores
 set wildignore+=*/vendor/*
 set wildignore+=*/coverage/assets/*
@@ -123,7 +126,7 @@ command! Qall :qall
 :map <C-k> <C-w>k
 :map <C-l> <C-w>l
 :map <C-h> <C-w>h
-:map <C-o> <C-w>o
+" :map <C-o> <C-w>o
 
 " close file
 :map qq <C-w>q
@@ -307,6 +310,8 @@ autocmd FileType ruby nnoremap  <leader>s :call ri#OpenSearchPrompt(0)<CR>
 
 " highlight rspec keywords
 autocmd BufRead *_spec.rb syn keyword rubyRspec context it specify it_should_behave_like before after setup subject its shared_examples_for shared_context let described_class expect
+
+au BufRead,BufNewFile *_spec.rb map .. :w \|! clear && bundle exec rspec specs<CR>
 
 autocmd FileType ruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby let g:rubycomplete_buffer_loading=1
