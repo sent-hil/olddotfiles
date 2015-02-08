@@ -6,3 +6,4 @@ tags
 .local/*
 .DS_Store
 .config/fish/fishd.*
+.vim/.netrwhist
