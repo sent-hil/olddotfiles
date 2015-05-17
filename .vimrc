@@ -120,8 +120,6 @@ command!  W :w
 command!  Q :q
 command! Wq :wq
 
-command! Qall :qall
-
 :map <C-j> <C-w>j
 :map <C-k> <C-w>k
 :map <C-l> <C-w>l
@@ -169,8 +167,6 @@ vmap <C-x> :!pbcopy<CR>
 " cut with shift c
 vmap <C-c> :w !pbcopy<CR><CR>
 
-let g:Powerline_symbols = 'fancy'
-
 set rtp+=$GOROOT/misc/vim
 call vundle#rc()
 
@@ -190,7 +186,6 @@ Bundle 'The-NERD-Commenter'
 Bundle 'Syntastic'
 Bundle 'mileszs/ack.vim'
 Bundle 'Tagbar'
-Bundle 'Lokaltog/vim-powerline'
 Bundle 'fugitive.vim'
 Bundle 'delimitMate.vim'
 Bundle 'kien/ctrlp.vim'
@@ -208,8 +203,7 @@ Bundle "Raimondi/delimitMate"
 Bundle 'vim-coffee-script'
 
 Bundle "skwp/greplace.vim"
-
-" Bundle "scrooloose/nerdtree"
+Bundle "itchyny/lightline.vim"
 
 let g:EasyMotion_leader_key = '<Leader>'
 
@@ -303,7 +297,6 @@ nnoremap - :Switch<cr>
 
 " save & run file
 autocmd FileType ruby map .. :w \|! clear && ruby %<CR>
-autocmd BufWritePre *.rb !ripper-tags -R --exclude=vendor
 
 " open prompt to search ri docs
 autocmd FileType ruby nnoremap  <leader>s :call ri#OpenSearchPrompt(0)<CR>
@@ -311,7 +304,7 @@ autocmd FileType ruby nnoremap  <leader>s :call ri#OpenSearchPrompt(0)<CR>
 " highlight rspec keywords
 autocmd BufRead *_spec.rb syn keyword rubyRspec context it specify it_should_behave_like before after setup subject its shared_examples_for shared_context let described_class expect
 
-au BufRead,BufNewFile *_spec.rb map .. :w \|! clear && bundle exec rspec specs<CR>
+au BufRead,BufNewFile *_spec.rb map .. :w \|! clear && bundle exec rake<CR>
 
 autocmd FileType ruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby let g:rubycomplete_buffer_loading=1
@@ -321,6 +314,10 @@ autocmd FileType ruby nnoremap <leader>ac :Ack --ruby "<C-R><C-W>"
 " ? and ! are considered part of method
 autocmd FileType ruby set iskeyword+=?,!
 
+" common ruby files
+au BufRead,BufNewFile *.ru set filetype=ruby
+au BufRead,BufNewFile Gemfile set filetype=ruby
+au BufRead,BufNewFile Gemfile.lock set filetype=ruby
 
 " autoindent with two spaces, always expand tabs
 autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,coffee set ai sw=2 sts=2 et
@@ -441,7 +438,7 @@ autocmd BufWritePre * :%s/\s\+$//e
 let NERDSpaceDelims=1
 
 " prevents duplicate comment prefixes
-let NERDDefaultNesting=0
+let NERDDefaultNesting=1
 
 " From https://github.com/amix/vimrc/blob/master/vimrcs/extended.vim
 
@@ -489,14 +486,6 @@ map <leader>pp :setlocal paste!<cr>
 let g:syntastic_mode_map={ 'mode': 'active',
                      \ 'active_filetypes': [],
                      \ 'passive_filetypes': ['html'] }
-
-" Show all tabs:
-" /\t"
-
-""" move lines up, down
-nnoremap <C-u> :m .+1<CR>==
-nnoremap <C-i> :m .-2<CR>==
-
 " Insert mode
 inoremap <C-u> <ESC>:m .+1<CR>==gi
 inoremap <C-i> <ESC>:m .-2<CR>==gi
@@ -519,3 +508,13 @@ autocmd! BufRead,BufNewFile Gomfile setfiletype ruby
 
 set exrc
 set secure
+
+:nmap ; :
+
+let g:lightline = {
+      \ 'component': {
+      \   'readonly': '%{&readonly?"⭤":""}',
+      \ },
+      \ 'separator': { 'left': '⮀', 'right':    '⮂' },
+      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \ }
