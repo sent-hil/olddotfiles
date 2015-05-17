@@ -39,8 +39,7 @@ if status --is-login
   set PATH /Users/senthil/o-ri/ /Users/senthil/.rbenv/versions/2.1.5/bin/ /usr/local/go/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin /usr/local/sbin /usr/local/Cellar/go/1.3/libexec/bin /Users/senthil/.dotify/.gobin /Users/senthil/Documents/work/koding/go/bin
 
   set GOPATH /Users/senthil/Documents/work/koding/go
-  # set GOROOT /usr/local/go
-  set GOROOT /usr/local/Cellar/go/1.3/libexec
+  set GOROOT /usr/local/go
   set JAVA_HOME /Library/Java/JavaVirtualMachines/jdk1.7.0_25.jdk/Contents/Home
   #set GOBIN  /usr/local/go/bin
 end
